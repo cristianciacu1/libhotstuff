@@ -74,6 +74,9 @@ class PubKeyDummy: public PubKey {
     PubKeyDummy *clone() override { return new PubKeyDummy(*this); }
     void serialize(DataStream &) const override {}
     void unserialize(DataStream &) override {}
+    public:
+    PubKeyDummy() = default;
+    PubKeyDummy(const bytearray_t &) {}
 };
 
 class PrivKeyDummy: public PrivKey {
@@ -81,6 +84,9 @@ class PrivKeyDummy: public PrivKey {
     void serialize(DataStream &) const override {}
     void unserialize(DataStream &) override {}
     void from_rand() override {}
+    public:
+    PrivKeyDummy() = default;
+    PrivKeyDummy(const bytearray_t &) {}
 };
 
 class PartCertDummy: public PartCert {
@@ -88,6 +94,8 @@ class PartCertDummy: public PartCert {
     public:
     PartCertDummy() {}
     PartCertDummy(const uint256_t &obj_hash):
+        obj_hash(obj_hash) {}
+    PartCertDummy(const PrivKey &, const uint256_t &obj_hash):
         obj_hash(obj_hash) {}
 
     void serialize(DataStream &s) const override {
